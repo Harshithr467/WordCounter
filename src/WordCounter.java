@@ -5,7 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * This program asks the user for a text file and makes a
@@ -35,6 +38,41 @@ public class WordCounter {
     }
 
     
+
+    public static Set<Character> getSeparator(String str){
+        return null;
+        
+    }
+
+    public static void generateHTMLPage (PrintWriter out, BufferedReader in, String inputFile, HashMap<String,Integer> wordsAndCounter, Queue<String> words){
+        assert out != null : "Violation of: out is not null";
+        
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Words Counted in " + inputFile + "</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h2>Words Counted in " + inputFile + "</h2>");
+        out.println("<hr />");
+        out.println("<table border=\"1\">");
+        out.println("<tr>");
+        out.println("<th>Words</th>");
+        out.println("<th>Counts</th>");
+        out.println("</tr>");
+
+        // iterate through the words in sorted queue and print them in table.
+        for (String s : words) {
+            out.println("<tr>");
+            out.println("<td>" + s + "</td>");
+            out.println("<td>" + wordsAndCounter.get(s) + "</td>");
+            out.println("</tr>");
+        }
+        out.println("</table>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+
+
 
     public static void main(String[] args) {
         Scanner snc = new Scanner(System.in);
