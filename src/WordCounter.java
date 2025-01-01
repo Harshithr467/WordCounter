@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
@@ -40,8 +41,12 @@ public class WordCounter {
     
 
     public static Set<Character> getSeparator(String str){
-        return null;
-        
+        Set<Character> separators = new HashSet<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            separators.add(str.charAt(i));
+        }
+        return separators;
     }
 
     public static void generateHTMLPage (PrintWriter out, BufferedReader in, String inputFile, HashMap<String,Integer> wordsAndCounter, Queue<String> words){
