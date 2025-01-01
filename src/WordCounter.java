@@ -38,6 +38,13 @@ public class WordCounter {
         }
     }
 
+    /**
+     * a String of all types of separators.
+     */
+    @SuppressWarnings("unused")
+    private static final String SEPARATORS = " \t\n\r,-.!?[]';:/()" + "@#$%^&*_=+"
+            + "1234567890";
+
     
 
     public static Set<Character> getSeparator(String str){
@@ -78,6 +85,68 @@ public class WordCounter {
     }
 
 
+    /**
+     * Returns the first "word" (maximal length string of characters not in
+     * {@code separators}) or "separator string" (maximal length string of
+     * characters in {@code separators}) in the given {@code text} starting at
+     * the given {@code position}. Note: This method is taken from my CSE 2221
+     * class + improved upon.
+     *
+     * @param text
+     *            the {@code String} from which to get the word or separator
+     *            string
+     * @param position
+     *            the starting index
+     * @param separators
+     *            the {@code Set} of separator characters
+     * @return the first word or separator string found in {@code text} starting
+     *         at index {@code position}
+     * @requires 0 <= position < |text|
+     * @ensures <pre>
+     * nextWordOrSeparator =
+     *   text[position, position + |nextWordOrSeparator|)  and
+     * if entries(text[position, position + 1)) intersection separators = {}
+     * then
+     *   entries(nextWordOrSeparator) intersection separators = {}  and
+     *   (position + |nextWordOrSeparator| = |text|  or
+     *    entries(text[position, position + |nextWordOrSeparator| + 1))
+     *      intersection separators /= {})
+     * else
+     *   entries(nextWordOrSeparator) is subset of separators  and
+     *   (position + |nextWordOrSeparator| = |text|  or
+     *    entries(text[position, position + |nextWordOrSeparator| + 1))
+     *      is not subset of separators)
+     * </pre>
+     */
+    public static String nextWordOrSeparator(String text, int position,
+            Set<Character> separators) {
+        assert text != null : "Violation of: text is not null";
+        assert separators != null : "Violation of: separators is not null";
+        assert 0 <= position : "Violation of: 0 <= position";
+        assert position < text.length() : "Violation of: position < |text|";
+
+        char firstC = text.charAt(position);
+        /**
+         * Used string builder because eclipse gave me a bug notification saying
+         * it was better to use stringbuilder rather than string.
+         */
+        StringBuilder nextWordOrSeparator = new StringBuilder();
+        nextWordOrSeparator.append(firstC);
+        int i = position + 1;
+
+        if (!separators.contains(firstC)) {
+            while (i < text.length() && !separators.contains(text.charAt(i))) {
+                nextWordOrSeparator.append(text.charAt(i));
+                i++;
+            }
+        } else {
+            while (i < text.length() && separators.contains(text.charAt(i))) {
+                nextWordOrSeparator.append(text.charAt(i));
+                i++;
+            }
+        }
+        return nextWordOrSeparator.toString();
+    }
 
     public static void main(String[] args) {
         Scanner snc = new Scanner(System.in);
